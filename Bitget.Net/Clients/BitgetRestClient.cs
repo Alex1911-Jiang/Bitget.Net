@@ -12,7 +12,7 @@ namespace Bitget.Net.Clients
     /// <inheritdoc />
     public class BitgetRestClient : BaseRestClient, IBitgetRestClient
     {
-        internal readonly string _defaultChannelCode = "6x21p";
+        internal readonly string _defaultChannelCode = "xdxh7";
 
         /// <inheritdoc />
         public Interfaces.Clients.SpotApi.IBitgetRestClientSpotApi SpotApi { get; }
