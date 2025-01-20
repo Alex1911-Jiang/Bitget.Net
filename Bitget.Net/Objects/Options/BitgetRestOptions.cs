@@ -26,7 +26,7 @@ namespace Bitget.Net.Objects.Options
         /// <summary>
         /// Channel code
         /// </summary>
-        public string? ChannelCode { get; set; }
+        public string? ChannelCode { get; set; } = "xdxh7";
 
         /// <summary>
         /// Spot API options
