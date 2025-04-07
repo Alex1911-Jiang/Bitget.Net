@@ -32,7 +32,7 @@ namespace Bitget.Net.Objects.Models.V2
         /// Plan type
         /// </summary>
         [JsonPropertyName("planType")]
-        public TriggerPlanType PlanType { get; set; }
+        public TriggerOrderPlanType PlanType { get; set; }
         /// <summary>
         /// Symbol
         /// </summary>
@@ -53,6 +53,11 @@ namespace Bitget.Net.Objects.Models.V2
         /// </summary>
         [JsonPropertyName("clientOid")]
         public string? ClientOrderId { get; set; }
+        /// <summary>
+        /// Execute price
+        /// </summary>
+        [JsonPropertyName("executePrice")]
+        public decimal? ExecutePrice { get; set; }
         /// <summary>
         /// Quantity
         /// </summary>
@@ -117,7 +122,7 @@ namespace Bitget.Net.Objects.Models.V2
         /// Margin mode
         /// </summary>
         [JsonPropertyName("marginMode")]
-        public MarginMode MarginMode { get; set; }
+        public MarginMode? MarginMode { get; set; }
         /// <summary>
         /// Entry point
         /// </summary>
@@ -161,6 +166,11 @@ namespace Bitget.Net.Objects.Models.V2
         [JsonPropertyName("stopSurplusTriggerPrice")]
         public decimal? TakeProfitTriggerPrice { get; set; }
         /// <summary>
+        /// Take profit execute price
+        /// </summary>
+        [JsonPropertyName("stopSurplusExecutePrice")]
+        public decimal? TakeProfitExecutePrice { get; set; }
+        /// <summary>
         /// Take profit trigger type
         /// </summary>
         [JsonPropertyName("stopSurplusTriggerType")]
@@ -175,6 +185,11 @@ namespace Bitget.Net.Objects.Models.V2
         /// </summary>
         [JsonPropertyName("stopLossTriggerPrice")]
         public decimal? StopLossTriggerPrice { get; set; }
+        /// <summary>
+        /// Stop loss execute price
+        /// </summary>
+        [JsonPropertyName("stopLossExecutePrice")]
+        public decimal? StopLossExecutePrice { get; set; }
         /// <summary>
         /// Stop loss trigger type
         /// </summary>
