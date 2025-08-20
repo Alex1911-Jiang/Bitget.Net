@@ -13,10 +13,12 @@ using CryptoExchange.Net.Converters.MessageParsing;
 using CryptoExchange.Net.Converters.SystemTextJson;
 using CryptoExchange.Net.Interfaces;
 using CryptoExchange.Net.Objects;
+using CryptoExchange.Net.Objects.Errors;
 using CryptoExchange.Net.Objects.Sockets;
 using CryptoExchange.Net.SharedApis;
 using CryptoExchange.Net.Sockets;
 using Microsoft.Extensions.Logging;
+using System.Net.WebSockets;
 
 namespace Bitget.Net.Clients.SpotApiV2
 {
@@ -29,11 +31,15 @@ namespace Bitget.Net.Clients.SpotApiV2
         private static readonly MessagePath _channelPath = MessagePath.Get().Property("arg").Property("channel");
         private static readonly MessagePath _instIdPath = MessagePath.Get().Property("arg").Property("instId");
 
+        protected override ErrorMapping ErrorMapping => BitgetErrors.SocketErrors;
+
         #region ctor
         internal BitgetSocketClientSpotApi(ILogger logger, BitgetSocketOptions options) :
             base(logger, options.Environment.SocketBaseAddress, options, options.SpotOptions)
         {
             RateLimiter = BitgetExchange.RateLimiter.Websocket;
+
+            ProcessUnparsableMessages = true;
 
             RegisterPeriodicQuery(
                 "Ping",
@@ -41,7 +47,7 @@ namespace Bitget.Net.Clients.SpotApiV2
                 x => new BitgetPingQuery(),
                 (connection, result) =>
                 {
-                    if (result.Error?.Message.Equals("Query timeout") == true)
+                    if (result.Error?.ErrorType == ErrorType.Timeout)
                     {
                         // Ping timeout, reconnect
                         _logger.LogWarning("[Sckt {SocketId}] Ping response timeout, reconnecting", connection.SocketId);
@@ -52,7 +58,7 @@ namespace Bitget.Net.Clients.SpotApiV2
         #endregion
 
         /// <inheritdoc />
-        protected override IByteMessageAccessor CreateAccessor() => new SystemTextJsonByteMessageAccessor(SerializerOptions.WithConverters(BitgetExchange._serializerContext));
+        protected override IByteMessageAccessor CreateAccessor(WebSocketMessageType type) => new SystemTextJsonByteMessageAccessor(SerializerOptions.WithConverters(BitgetExchange._serializerContext));
         /// <inheritdoc />
         protected override IMessageSerializer CreateSerializer() => new SystemTextJsonMessageSerializer(SerializerOptions.WithConverters(BitgetExchange._serializerContext));
 
@@ -65,7 +71,7 @@ namespace Bitget.Net.Clients.SpotApiV2
         /// <inheritdoc />
         public override string GetListenerIdentifier(IMessageAccessor message)
         {
-            if (!message.IsJson)
+            if (!message.IsValid)
                 return "pong";
 
             var evnt = message.GetValue<string>(_eventPath);
@@ -275,7 +281,7 @@ namespace Bitget.Net.Clients.SpotApiV2
             Action<DataEvent<T>> handler,
             CancellationToken ct)
         {
-            var subscription = new BitgetSubscription<T>(_logger, request, handler, authenticated);
+            var subscription = new BitgetSubscription<T>(_logger, this, request, handler, authenticated);
             return await SubscribeAsync(url, subscription, ct).ConfigureAwait(false);
         }
 
@@ -304,7 +310,7 @@ namespace Bitget.Net.Clients.SpotApiV2
                 }
             };
 
-            return Task.FromResult<Query?>(new BitgetAuthQuery(socketRequest));
+            return Task.FromResult<Query?>(new BitgetAuthQuery(this, socketRequest));
         }
     }
 }
