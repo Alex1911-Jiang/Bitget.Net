@@ -1,6 +1,6 @@
 # ![.Bitget.Net](https://github.com/JKorf/Bitget.Net/blob/main/Bitget.Net/Icon/icon.png?raw=true) Bitget.Net
 
-[![.NET](https://img.shields.io/github/actions/workflow/status/JKorf/Bitget.Net/dotnet.yml?style=for-the-badge)](https://github.com/JKorf/Bitget.Net/actions/workflows/dotnet.yml) ![License](https://img.shields.io/github/license/JKorf/Bitget.Net?style=for-the-badge)
+[![.NET](https://img.shields.io/github/actions/workflow/status/JKorf/Bitget.Net/dotnet.yml?style=for-the-badge)](https://github.com/JKorf/Bitget.Net/actions/workflows/dotnet.yml) ![License](https://img.shields.io/github/license/JKorf/Bitget.Net?style=for-the-badge) ![Since](https://img.shields.io/badge/since-2023-brightgreen?style=for-the-badge)
 
 Bitget.Net is a strongly typed client library for accessing the [Bitget REST and Websocket API](https://bitgetlimited.github.io/apidoc/en/spot).
 ## Features
@@ -84,6 +84,14 @@ var tickerSubscriptionResult = socketClient.SpotApi.SubscribeToTickerUpdatesAsyn
 
 For information on the clients, dependency injection, response processing and more see the [Bitget.Net documentation](https://cryptoexchange.jkorf.dev?library=Bitget.Net) or have a look at the examples [here](https://github.com/JKorf/Bitget.Net/tree/main/Examples) or [here](https://github.com/JKorf/CryptoExchange.Net/tree/master/Examples).
 
+## AI documentation
+For AI coding assistants and quick onboarding:
+* [AGENTS.md](AGENTS.md) skill-style instructions for Bitget.Net usage
+* [`llms.txt`](llms.txt) provides concise AI context
+* [`llms-full.txt`](llms-full.txt) provides detailed patterns, pitfalls and endpoint routing
+* [`docs/ai-api-map.md`](docs/ai-api-map.md) maps common intents to client members
+* [`Examples/ai-friendly`](Examples/ai-friendly) contains compact examples that are compiled by the test suite
+
 ## CryptoExchange.Net
 Biget.Net is based on the [CryptoExchange.Net](https://github.com/JKorf/CryptoExchange.Net) base library. Other exchange API implementations based on the CryptoExchange.Net base library are available and follow the same logic.
 
@@ -126,7 +134,7 @@ A Discord server is available [here](https://discord.gg/MSpeEtSY8t). Feel free t
 
 ## Supported functionality
 
-*Both V1 API and V2 are currently supported*
+*Both V2 API and V3/UTA are currently supported*
 
 ### V2  
 #### Spot
@@ -158,30 +166,22 @@ A Discord server is available [here](https://discord.gg/MSpeEtSY8t). Feel free t
 |Rest Isolated|✓|`restClient.SpotApiV2.Margin`|
 |Websocket|✓|`socketClient.SpotApiV2`|
 
-### V1  
+### UTA  
 #### Spot
 |API|Supported|Location|
 |--|--:|--|
-|Rest Public|✓|`restClient.SpotApi.ExchangeData`|
-|Rest Market|✓|`restClient.SpotApi.ExchangeData`|
-|Rest Wallet|✓|`restClient.SpotApi.Account`|
-|Rest Account|✓|`restClient.SpotApi.Account`|
-|Rest Trade|✓|`restClient.SpotApi.Trading`|
+|Rest Market|✓|`restClient.UnifiedApi.ExchangeData`|
+|Rest Account|✓|`restClient.UnifiedApi.Account`|
+|Rest Trade|✓|`restClient.UnifiedApi.Trading`|
+|Rest Strategy|✓|`restClient.UnifiedApi.Trading`|
+|Rest Copy Trading|X||
+|Rest Earn|X||
+|Rest Tax|X||
+|Rest Crypto Loans|X||
+|Rest Inst Loan|X||
 |Rest P2P|X||
-|Rest Sub-Account|X||
-|Rest Convert|X||
-|Websocket Public|✓|`socketClient.SpotApi`|
-|Websocket Private|✓|`socketClient.SpotApi`|
-
-#### Futures USDT/Coin
-|API|Supported|Location|
-|--|--:|--|
-|Rest Market|✓|`restClient.FuturesApi.ExchangeData`|
-|Rest Account|✓|`restClient.FuturesApi.Account`|
-|Rest Trade|✓|`restClient.FuturesApi.Trading`|
-|Websocket Public|✓|`socketClient.FuturesApi`|
-|Websocket Private|✓|`socketClient.FuturesApi`|
-
+|Websocket Public|✓|`socketClient.UnifiedApi`|
+|Websocket Private|✓|`socketClient.UnifiedApi`|
 
 ## Support the project
 Any support is greatly appreciated.
@@ -197,6 +197,19 @@ Make a one time donation in a crypto currency of your choice. If you prefer to d
 Alternatively, sponsor me on Github using [Github Sponsors](https://github.com/sponsors/JKorf).
 
 ## Release notes
+* Version 3.12.1 - 02 Jun 2026
+    * Fixed Shared GetKlines implementations using incorrect limit default
+
+* Version 3.12.0 - 02 Jun 2026
+    * Updated CryptoExchange.Net to v11.2.1
+    * Added UTA/Unified API access
+    * Fixed user client provider not caching new client when previous client was disposed
+
+* Version 3.11.0 - 26 May 2026
+    * Updated CryptoExchange.Net to version 11.2.0
+    * Added GetAgentSubCustomerListAsync endpoint
+    * Added MaxLimitOrderValue, MaxMarketOrderValue to BitgetSymbol model
+
 * Version 3.10.0 - 09 Apr 2026
     * Updated CryptoExchange.Net to version 11.1.0, see https://github.com/JKorf/CryptoExchange.Net/releases/ for full release notes
     * Added AreaAsset, Congestion properties to BitgetAsset model

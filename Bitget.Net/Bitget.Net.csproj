@@ -8,12 +8,12 @@
   <PropertyGroup>
     <PackageId>JK.Bitget.Net</PackageId>
     <Authors>JKorf</Authors>
-    <PackageVersion>3.10.0</PackageVersion>
-    <AssemblyVersion>3.10.0</AssemblyVersion>
-    <FileVersion>3.10.0</FileVersion>
+    <PackageVersion>3.12.1</PackageVersion>
+    <AssemblyVersion>3.12.1</AssemblyVersion>
+    <FileVersion>3.12.1</FileVersion>
     <Description>A high-performance .NET client library for the Bitget REST and WebSocket APIs, providing strongly typed models, automatic WebSocket reconnection, client-side rate limiting, local order book support, and seamless integration with other CryptoExchange.Net based clients.</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PackageTags>Bitget;Bitget.Net;Bitget.com;Bitget Client;Bitget API;CryptoCurrency;CryptoCurrency Exchange;CryptoExchange.Net</PackageTags>
+    <PackageTags>Bitget;Bitget.Net;Bitget.com;Bitget Client;Bitget API;CryptoCurrency;CryptoCurrency Exchange;CryptoExchange.Net;ccxt</PackageTags>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/JKorf/Bitget.Net.git</RepositoryUrl>
     <PackageProjectUrl>https://github.com/JKorf/Bitget.Net</PackageProjectUrl>
@@ -56,7 +56,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="CryptoExchange.Net" Version="11.1.0" />
+    <PackageReference Include="CryptoExchange.Net" Version="11.2.1" />
     <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="10.0.101">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

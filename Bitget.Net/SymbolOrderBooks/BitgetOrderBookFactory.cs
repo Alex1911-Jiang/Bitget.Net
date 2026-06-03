@@ -1,4 +1,5 @@
 ﻿using Bitget.Net.Enums;
+using Bitget.Net.Enums.Uta;
 using Bitget.Net.Interfaces;
 using Bitget.Net.Interfaces.Clients;
 using Bitget.Net.Objects.Options;
@@ -20,7 +21,6 @@ namespace Bitget.Net.SymbolOrderBooks
 
         /// <inheritdoc />
         public string ExchangeName => BitgetExchange.ExchangeName;
-
         /// <inheritdoc />
         public IOrderBookFactory<BitgetOrderBookOptions> Spot { get; }
         /// <inheritdoc />
@@ -77,5 +77,13 @@ namespace Bitget.Net.SymbolOrderBooks
                                              options,
                                              _serviceProvider.GetRequiredService<ILoggerFactory>(),
                                              _serviceProvider.GetRequiredService<IBitgetSocketClient>());
+
+        /// <inheritdoc />
+        public ISymbolOrderBook CreateUnified(ProductCategory category, string symbol, Action<BitgetOrderBookOptions>? options = null)
+            => new BitgetUnifiedSymbolOrderBook(category,
+                                                symbol,
+                                                options,
+                                                _serviceProvider.GetRequiredService<ILoggerFactory>(),
+                                                _serviceProvider.GetRequiredService<IBitgetSocketClient>());
     }
 }
